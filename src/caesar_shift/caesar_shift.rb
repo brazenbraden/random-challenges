@@ -9,11 +9,12 @@ class CaesarShift
   end
 
   def encrypt message
+    @rot = @rot.abs
     perform message
   end
 
   def decrypt message
-    @rot = -@rot
+    @rot = -@rot.abs
     perform message
   end
 
