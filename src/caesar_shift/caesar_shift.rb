@@ -9,12 +9,12 @@ class CaesarShift
   end
 
   def encrypt message
-    @rot = @rot.abs
+    @direction = 1
     perform message
   end
 
   def decrypt message
-    @rot = -@rot.abs
+    @direction = -1
     perform message
   end
 
@@ -37,8 +37,9 @@ class CaesarShift
   end
 
   def shift(char_code, range)
-    new_char = char_code + @rot
-    @rot > 0 ? positive(new_char, range) : negative(new_char, range)
+    offset = @rot * @direction
+    new_char = char_code + offset
+    offset > 0 ? positive(new_char, range) : negative(new_char, range)
   end
 
   def positive(new_char, range)
