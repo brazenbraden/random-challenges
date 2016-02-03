@@ -55,4 +55,25 @@ describe CaesarShift do
     end
   end
 
+  context "multiple encrypt and decrypt operations" do
+    it "handles multiple calls to encrypt" do
+      cypher = CaesarShift.new(1)
+      cypher.encrypt("abc") # "bcd"
+      expect(cypher.encrypt("def")).to eql("efg")
+    end
+
+    it "handles multiple calls to decrypt" do
+      cypher = CaesarShift.new(1)
+      cypher.decrypt("bcd") # "abc"
+      expect(cypher.decrypt("efg")).to eql("def")
+    end
+
+    it "handles multiple alternating calls" do
+      cypher = CaesarShift.new(1)
+      cypher.encrypt("abc") # "bcd"
+      cypher.decrypt("bcd") # "abc"
+      expect(cypher.encrypt("abc")).to eql("bcd")
+    end
+  end
+
 end
