@@ -2,8 +2,11 @@
 require 'optparse'
 
 class CaesarShift
-
-  # def initialize options, message = nil
+  attr_accessor :rot
+  
+  def initialize rot = 6
+    @rot = rot
+  end
   #   @message = options[:encrypt] || options[:decrypt] || message
   #   rot = (options[:rotation].to_i == 0 ) ? 13 : options[:rotation].to_i
   #   abort("Please provide a message to encrypt or decrypt.") if @message.nil?
