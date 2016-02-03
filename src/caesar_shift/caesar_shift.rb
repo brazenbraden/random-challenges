@@ -1,52 +1,31 @@
-#!/usr/bin/env ruby
-require 'optparse'
-
 class CaesarShift
   attr_accessor :rot
 
   def initialize rot = 6
     @rot = rot
+    @upper = Range.new(65, 90) # 65 - 90 = A - Z
+    @lower = Range.new(97, 122) # 97 - 122 = a - z
   end
 
-  def encrypt message
-    @direction = 1
-    perform message
+  def encrypt str
+    rotate_str(str, @rot)
   end
 
-  def decrypt message
-    @direction = -1
-    perform message
+  def decrypt str
+    rotate_str(str, -@rot)
   end
 
   private
 
-  def perform message
-    crypted = ""
-    message.each_byte do |char_code|
-        crypted << in_range(char_code)
-    end
-    crypted
+  def rotate_str(str, offset)
+    str.bytes.map {|char_code|
+      if @upper.include? char_code
+        char_code = (char_code - @upper.first + offset) % @upper.count + @upper.first
+      elsif @lower.include? char_code
+        char_code = (char_code - @lower.first + offset) % @lower.count + @lower.first
+      end
+      char_code.chr
+    }.join
   end
 
-  def in_range(char_code)
-    upper = Range.new(65,90) # 65 - 90 = A - Z
-    lower = Range.new(97,122) # 97 - 122 = a - z
-    return shift(char_code, upper) if upper.include? char_code
-    return shift(char_code, lower) if lower.include? char_code
-    return (char_code == 32) ? " " : char_code.chr
-  end
-
-  def shift(char_code, range)
-    offset = @rot * @direction
-    new_char = char_code + offset
-    offset > 0 ? positive(new_char, range) : negative(new_char, range)
-  end
-
-  def positive(new_char, range)
-    (new_char > range.last) ? (range.first + (new_char - (range.last + 1))).chr : new_char.chr
-  end
-
-  def negative(new_char, range)
-    (new_char < range.first) ? (range.last - (range.first - (new_char + 1))).chr : new_char.chr
-  end
 end
