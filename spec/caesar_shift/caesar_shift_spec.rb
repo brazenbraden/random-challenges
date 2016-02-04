@@ -1,8 +1,8 @@
-require_relative '../src/caesar_shift/caesar_shift'
+require_relative '../../src/caesar_shift/caesar_shift'
 
 describe CaesarShift do
 
-  context "instanciating an instance of CaesarShift" do
+  context "instantiating CaesarShift" do
 
     it "returns an instance" do
       caesar = CaesarShift.new
