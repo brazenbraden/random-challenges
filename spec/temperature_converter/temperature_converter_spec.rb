@@ -22,11 +22,11 @@ describe TemperatureConverter do
 
   it "convert to throw an ArgumentError if no temperature is given" do
     temp = TemperatureConverter.new
-    expect(temp.convert).to raise_error(ArgumentError)
+    expect{temp.convert}.to raise_error(ArgumentError)
   end
 
   context "converts celsius temperatures" do
-      it "converts 0 celsius to 0 celsius" do
+    it "converts 0 celsius to 0 celsius" do
       temp = TemperatureConverter.new(input_scale: 'celsius', output_scale: 'celsius')
       expect(temp.convert(0)).to eql(0.00)
     end
